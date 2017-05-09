@@ -1,16 +1,16 @@
 #!/bin/bash
 LiveNodes="$(echo `sudo eb health --view status | grep -a "total" -A 1 | awk -F ' ' '{print $1}' | sed -n '/total/{n;p;}'`)"
 echo Number of Live Nodes - $LiveNodes
-count=1 
-echo -e "The command we are going to run is - \e[31m $* \e[0m"
+count=1
+echo -e "The command we are going to run is - \x1B[31m $* \x1B[0m"
 echo "Press Any Key if you are sure to continue..."
 read
-while [ $count -le $LiveNodes ] 
+while [ $count -le $LiveNodes ]
 do
-echo -e "Output from No. \e[31m $count \e[0m Instance"
-echo -e "\e[31m"
+echo -e "Output from No. \x1B[31m $count \x1B[0m Instance"
+echo -e "\x1B[32m"
 sudo eb ssh -n $count --command "$*" | grep -v "INFO"
-echo -e "\e[0m"
+echo -e "\x1B[0m"
 echo ""
 (( count++ ))
 done
